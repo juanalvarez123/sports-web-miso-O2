@@ -7,6 +7,7 @@ import { AthletesService } from '../services/athletes/athletes.service';
   styleUrls: ['./athletes.component.css']
 })
 export class AthletesComponent implements OnInit {
+  public athletes:any;
 
   constructor(public athletesService: AthletesService) { 
   }
@@ -14,6 +15,8 @@ export class AthletesComponent implements OnInit {
   ngOnInit() {
     this.athletesService.getAthletes().subscribe(data =>{
       console.log(data);
+      this.athletes = data.results;
+      console.log(this.athletes);
     });
   }
 

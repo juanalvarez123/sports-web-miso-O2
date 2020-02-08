@@ -1,17 +1,47 @@
 <div class="container">
-  <div class="col-4">
-    <p>
-      HOLA
-    </p>
+  <div class="row pt-5">
+    <div class="col-lg-4 pt-5" *ngFor="let athlete of athletes">
+      <div class="card" style="width: 18rem;">
+        <img class="card-img-top" [src]="athlete.picture" alt="Card image cap">
+        <div class="card-body">
+          <h5 class="card-title">{{athlete.first_name}} {{athlete.last_name}}</h5>
+          <ul>
+            <li>
+              Altura: {{athlete.height}} cm
+            </li>
+            <li>
+              Peso: {{athlete.weight}} kg
+            </li>
+            <li>
+              Día de nacimiento: {{athlete.birth_date | date:'dd/MM/yyyy'}}
+            </li>
+            <li>
+              Lugar de nacimiento: {{athlete.birth_place}}
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
   </div>
-  <div class="col-4">
-    <p>
-      HOLA
-    </p>
-  </div>
-  <div class="col-4">
-    <p>
-      HOLA
-    </p>
+
+  <div class="row pt-5">
+    <div class="col-4">
+
+    </div>
+    <div class="col-4">
+      <nav aria-label="Page navigation example">
+        <ul class="pagination">
+          <li class="page-item"><a class="page-link" href="#">Previous</a></li>
+          <li class="page-item"><a class="page-link" href="#">1</a></li>
+          <li class="page-item"><a class="page-link" href="#">2</a></li>
+          <li class="page-item"><a class="page-link" href="#">3</a></li>
+          <li class="page-item"><a class="page-link" href="#">Next</a></li>
+        </ul>
+      </nav>
+    </div>
+    <div class="col-4">
+
+    </div>
+
   </div>
 </div>
