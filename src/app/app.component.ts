@@ -8,5 +8,4 @@ import { environment } from '../environments/environment';
 })
 export class AppComponent {
   title = 'sports-web-miso-O2';
-  url = environment.sportsRestApiHost + '/login';
 }
