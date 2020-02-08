@@ -11,7 +11,7 @@ export class AthletesService {
   public headers: Headers;
   public environment:any = environment.sportsRestApiHost;
 
-  constructor(public http: Http) {
+  constructor(public http:Http) {
     this.headers = new Headers();
     this.headers.append("Content-Type", "application/json");
   }
