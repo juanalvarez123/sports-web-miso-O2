@@ -22,6 +22,7 @@ export class AthletesComponent implements OnInit {
     this.athletesService.getAthletes().subscribe(data =>{
       this.data = data;
       this.athletes = data.results;
+      console.log(data.results);
       this.numberOfPages = Math.ceil(data.count/6)
       this.pagination = Array(this.numberOfPages).fill(0)
     });

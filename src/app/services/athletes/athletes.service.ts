@@ -15,14 +15,13 @@ export class AthletesService {
   constructor(public http:Http) {
     this.headers = new Headers();
     const key = 'Token ' + JSON.parse(localStorage.getItem('currentUser')).key
-    console.log(key)
     this.headers.append('Authorization', key)
     this.headers.append("Content-Type", "application/json");
   }
 
   public getAthletes() {
     return this.http
-      .get(this.environment + "/api/v1/athletes", { headers: this.headers })
+      .get(this.environment + "/api/v1/athletes/", { headers: this.headers })
       .pipe(map(res => res.json()));
   }
 
