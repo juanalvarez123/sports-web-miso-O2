@@ -12,6 +12,8 @@ import { HomeComponent } from './home/home.component';
 import { ReactiveFormsModule } from "@angular/forms";
 import { SettingsComponent } from './settings/settings.component';
 import { HeaderModule } from './header/header.module';
+import { ToastrModule } from 'ngx-toastr';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 @NgModule({
   declarations: [
@@ -28,7 +30,9 @@ import { HeaderModule } from './header/header.module';
     ReactiveFormsModule,
     BrowserModule,
     HttpClientModule,
-    HeaderModule
+    HeaderModule,
+    ToastrModule.forRoot(),
+    BrowserAnimationsModule
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true }

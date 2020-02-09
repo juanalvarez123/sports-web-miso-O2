@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Http, Headers } from "@angular/http";
 import { map } from "rxjs/operators";
 import { environment } from "../../../environments/environment";
+import { HttpParams } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root'
@@ -21,4 +22,25 @@ export class AthletesService {
       .get(this.environment + "/api/v1/athletes", { headers: this.headers })
       .pipe(map(res => res.json()));
   }
+
+  public getAthletesByPagination(param){
+    return this.http
+    .get(this.environment + "/api/v1/athletes/", { headers: this.headers, params: {"offset":param}})
+    .pipe(map(res => res.json()));
+  }
+
+  public previous(url)
+  {
+    return this.http
+    .get(url, { headers: this.headers})
+    .pipe(map(res => res.json()));
+  }
+
+  public next(url){
+    return this.http
+    .get(url, { headers: this.headers})
+    .pipe(map(res => res.json()));
+  }
+
+  
 }
