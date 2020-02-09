@@ -32,7 +32,7 @@ export class LoginComponent implements OnInit {
     this.returnUrl = this.route.snapshot.queryParams['return-url'] || '/';
 
     if (this.authenticationService.isCurrentUserAuthenticated()) {
-      this.router.navigate(['']);
+      this.router.navigate(['home']);
     }
   }
 

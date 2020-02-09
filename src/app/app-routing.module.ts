@@ -8,11 +8,11 @@ import { HomeComponent } from "./home/home.component";
 import { SettingsComponent } from "./settings/settings.component";
 
 const routes: Routes = [
-  {path: 'athletes' , component: AthletesComponent},
-  {path: '', component: HomeComponent, canActivate: [AuthGuard]},
+  {path: 'athletes' , component: AthletesComponent, canActivate:[AuthGuard]},
+  {path: 'home', component: HomeComponent, canActivate: [AuthGuard]},
   {path: 'login', component: LoginComponent},
   {path: 'settings', component: SettingsComponent, canActivate: [AuthGuard]},
-  {path: '**', redirectTo: ''}
+  {path: '**', redirectTo: 'home'}
 ];
 
 @NgModule({
