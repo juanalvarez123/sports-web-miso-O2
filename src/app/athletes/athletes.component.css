@@ -13,3 +13,8 @@ ul{
     margin-top: 20px;
     height: 50%;
 }
+
+.page-item{
+    color:#007bff;
+    cursor: pointer;
+}

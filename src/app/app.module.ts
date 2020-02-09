@@ -11,6 +11,7 @@ import { ErrorInterceptor } from "./helpers/error.interceptor";
 import { HomeComponent } from './home/home.component';
 import { ReactiveFormsModule } from "@angular/forms";
 import { SettingsComponent } from './settings/settings.component';
+import { HeaderModule } from './header/header.module';
 
 @NgModule({
   declarations: [
@@ -26,7 +27,8 @@ import { SettingsComponent } from './settings/settings.component';
     HttpModule,
     ReactiveFormsModule,
     BrowserModule,
-    HttpClientModule
+    HttpClientModule,
+    HeaderModule
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true }
