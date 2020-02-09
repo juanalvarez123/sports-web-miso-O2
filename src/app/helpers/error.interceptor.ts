@@ -6,6 +6,7 @@ import { HttpEvent, HttpHandler, HttpInterceptor, HttpRequest } from '@angular/c
 
 @Injectable()
 export class ErrorInterceptor implements HttpInterceptor {
+
   constructor(private authenticationService: AuthenticationService) {
   }
 

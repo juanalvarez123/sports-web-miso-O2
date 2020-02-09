@@ -9,10 +9,11 @@ import { AuthenticationResponse } from "../../model/authentication.model";
 export class AuthenticationService {
 
   private currentUserSubject: BehaviorSubject<AuthenticationResponse>;
-  public currentUser: Observable<AuthenticationResponse>;
+  private currentUser: Observable<AuthenticationResponse>;
+  readonly CURRENT_USER: string = 'currentUser';
 
   constructor(private http: HttpClient) {
-    this.currentUserSubject = new BehaviorSubject<AuthenticationResponse>(JSON.parse(localStorage.getItem('currentUser')));
+    this.currentUserSubject = new BehaviorSubject<AuthenticationResponse>(JSON.parse(localStorage.getItem(this.CURRENT_USER)));
     this.currentUser = this.currentUserSubject.asObservable();
   }
 
@@ -28,14 +29,14 @@ export class AuthenticationService {
     const headers = new HttpHeaders().set('Content-Type', 'application/json');
     return this.http.post<any>(`${environment.sportsRestApiHost}/api/v1/login/`, { username, email, password }, { headers })
     .pipe(map(user => {
-      localStorage.setItem('currentUser', JSON.stringify(user));
+      localStorage.setItem(this.CURRENT_USER, JSON.stringify(user));
       this.currentUserSubject.next(user);
       return user;
     }));
   }
 
   logout() {
-    localStorage.removeItem('currentUser');
+    localStorage.removeItem(this.CURRENT_USER);
     this.currentUserSubject.next(null);
   }
 }
