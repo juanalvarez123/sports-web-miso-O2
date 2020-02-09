@@ -8,6 +8,8 @@ import { AthletesService } from '../services/athletes/athletes.service';
 })
 export class AthletesComponent implements OnInit {
   public athletes:any;
+  public numberOfPages:any;
+  public pagination:any;
 
   constructor(public athletesService: AthletesService) { 
   }
@@ -15,6 +17,8 @@ export class AthletesComponent implements OnInit {
   ngOnInit() {
     this.athletesService.getAthletes().subscribe(data =>{
       this.athletes = data.results;
+      this.numberOfPages = Math.ceil(data.count/6)
+      this.pagination = Array(this.numberOfPages).fill(0)
     });
   }
 

@@ -2,3 +2,14 @@ ul{
     list-style-type:none;
     padding-left: 0px;
 }
+
+.sport_icon{
+    width: 50px;
+}
+
+.card-img-top{
+    margin:auto;
+    width: 50%;
+    margin-top: 20px;
+    height: 50%;
+}
