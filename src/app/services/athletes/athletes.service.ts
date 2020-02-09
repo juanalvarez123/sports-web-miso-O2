@@ -14,6 +14,9 @@ export class AthletesService {
 
   constructor(public http:Http) {
     this.headers = new Headers();
+    const key = 'Token ' + JSON.parse(localStorage.getItem('currentUser')).key
+    console.log(key)
+    this.headers.append('Authorization', key)
     this.headers.append("Content-Type", "application/json");
   }
 
@@ -25,7 +28,7 @@ export class AthletesService {
 
   public getAthletesByPagination(param){
     return this.http
-    .get(this.environment + "/api/v1/athletes/", { headers: this.headers, params: {"offset":param}})
+    .get(this.environment + "/api/v1/athletes/", { headers: this.headers, params: {"page":param}})
     .pipe(map(res => res.json()));
   }
 

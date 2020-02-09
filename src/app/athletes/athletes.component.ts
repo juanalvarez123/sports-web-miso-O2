@@ -28,7 +28,6 @@ export class AthletesComponent implements OnInit {
   }
 
   cambiar(pagina){
-    let offset = (pagina-1)*6
     if(pagina == 1){
       this.athletesService.getAthletes().subscribe(data =>{
         this.athletes = data.results;
@@ -36,7 +35,7 @@ export class AthletesComponent implements OnInit {
       });
     }
     else{
-      this.athletesService.getAthletesByPagination(offset).subscribe(data =>{
+      this.athletesService.getAthletesByPagination(pagina).subscribe(data =>{
         this.athletes = data.results;
         this.data = data;
       });
@@ -60,7 +59,7 @@ export class AthletesComponent implements OnInit {
   {
     if(this.data.previous)
     {
-      this.athletesService.next(this.data.previous).subscribe(data =>{
+      this.athletesService.previous(this.data.previous).subscribe(data =>{
         this.athletes = data.results;
         this.data = data;
       });
