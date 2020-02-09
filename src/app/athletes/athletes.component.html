@@ -38,7 +38,7 @@
         <ul class="pagination">
           <li class="page-item" (click)="previous()"><a class="page-link">Previous</a></li>
           <li class="page-item" *ngFor="let pages of pagination; let i = index"><a class="page-link"
-              (click)="cambiar(i+1)">{{i+1}}</a></li>
+              (click)="change(i+1)">{{i+1}}</a></li>
           <li class="page-item" (click)="next()"><a class="page-link">Next</a></li>
         </ul>
       </nav>
