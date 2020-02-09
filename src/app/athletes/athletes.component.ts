@@ -16,6 +16,8 @@ export class AthletesComponent implements OnInit {
   constructor(private athletesService: AthletesService, private toastr:ToastrService) { 
   }
 
+  //TODO: MISSING SPORTS ICON
+
   ngOnInit() {
     this.athletesService.getAthletes().subscribe(data =>{
       this.data = data;
