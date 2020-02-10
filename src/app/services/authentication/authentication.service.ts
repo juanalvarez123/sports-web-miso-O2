@@ -1,15 +1,15 @@
-import { Injectable } from "@angular/core";
-import { HttpClient, HttpHeaders } from "@angular/common/http";
-import { BehaviorSubject, Observable } from "rxjs";
-import { map } from "rxjs/operators";
-import { environment } from "../../../environments/environment";
-import { AuthenticationResponse } from "../../model/authentication.model";
+import { Injectable } from '@angular/core';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { BehaviorSubject, Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
+import { environment } from '../../../environments/environment';
+import { AuthenticationResponse } from '../../model/authentication.model';
 
-@Injectable({ providedIn: "root" })
+@Injectable({ providedIn: 'root' })
 export class AuthenticationService {
   private currentUserSubject: BehaviorSubject<AuthenticationResponse>;
   private currentUser: Observable<AuthenticationResponse>;
-  readonly CURRENT_USER: string = "currentUser";
+  readonly CURRENT_USER: string = 'currentUser';
 
   constructor(private http: HttpClient) {
     this.currentUserSubject = new BehaviorSubject<AuthenticationResponse>(
@@ -27,7 +27,7 @@ export class AuthenticationService {
   }
 
   login(username: string, email: string, password: string) {
-    const headers = new HttpHeaders().set("Content-Type", "application/json");
+    const headers = new HttpHeaders().set('Content-Type', 'application/json');
     return this.http
       .post<any>(
         `${environment.sportsRestApiHost}/api/v1/login/`,
@@ -45,10 +45,10 @@ export class AuthenticationService {
 
   logout() {
     const headers = new HttpHeaders();
-    headers.append("Content-Type", "application/json");
+    headers.append('Content-Type', 'application/json');
     headers.append(
-      "Authorization",
-      JSON.parse(localStorage.getItem("currentUser")).key
+      'Authorization',
+      JSON.parse(localStorage.getItem('currentUser')).key
     );
     localStorage.removeItem(this.CURRENT_USER);
     this.currentUserSubject.next(null);

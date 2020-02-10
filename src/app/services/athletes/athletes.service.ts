@@ -1,48 +1,43 @@
 import { Injectable } from '@angular/core';
-import { Http, Headers } from "@angular/http";
-import { map } from "rxjs/operators";
-import { environment } from "../../../environments/environment";
+import { Http, Headers } from '@angular/http';
+import { map } from 'rxjs/operators';
+import { environment } from '../../../environments/environment';
 import { HttpParams } from '@angular/common/http';
+import { AuthenticationService } from '../authentication/authentication.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AthletesService {
-
   public headers: Headers;
-  public environment:any = environment.sportsRestApiHost;
+  public environment: any = environment.sportsRestApiHost;
 
-  constructor(public http:Http) {
+  constructor(private http: Http, private authService: AuthenticationService) {
     this.headers = new Headers();
-    const key = 'Token ' + JSON.parse(localStorage.getItem('currentUser')).key
-    this.headers.append('Authorization', key)
-    this.headers.append("Content-Type", "application/json");
+    const userKey = authService.getCurrentUser().key;
+    const key = 'Token ' + userKey;
+    this.headers.append('Authorization', key);
+    this.headers.append('Content-Type', 'application/json');
   }
 
   public getAthletes() {
     return this.http
-      .get(this.environment + "/api/v1/athletes/", { headers: this.headers })
+      .get(this.environment + '/api/v1/athletes/', { headers: this.headers })
       .pipe(map(res => res.json()));
   }
 
-  public getAthletesByPagination(param){
+  public getAthletesByPagination(param) {
     return this.http
-    .get(this.environment + "/api/v1/athletes/", { headers: this.headers, params: {"page":param}})
-    .pipe(map(res => res.json()));
+      .get(this.environment + '/api/v1/athletes/', {
+        headers: this.headers,
+        params: { page: param }
+      })
+      .pipe(map(res => res.json()));
   }
 
-  public previous(url)
-  {
+  public changePreviousNext(url) {
     return this.http
-    .get(url, { headers: this.headers})
-    .pipe(map(res => res.json()));
+      .get(url, { headers: this.headers })
+      .pipe(map(res => res.json()));
   }
-
-  public next(url){
-    return this.http
-    .get(url, { headers: this.headers})
-    .pipe(map(res => res.json()));
-  }
-
-  
 }
