@@ -8,65 +8,61 @@ import { ToastrService } from 'ngx-toastr';
   styleUrls: ['./athletes.component.css']
 })
 export class AthletesComponent implements OnInit {
-  public athletes:any;
-  public numberOfPages:any;
-  public pagination:any;
-  public data:any;
+  public athletes: any;
+  public numberOfPages: any;
+  public pagination: any;
+  public data: any;
 
-  constructor(private athletesService: AthletesService, private toastr:ToastrService) { 
-  }
-
+  constructor(
+    private athletesService: AthletesService,
+    private toastr: ToastrService
+  ) {}
 
   ngOnInit() {
-    this.athletesService.getAthletes().subscribe(data =>{
-      this.data = data;
+    const firstPage = 1;
+    const maxAthletesByPage = 6;
+    this.athletesService.getAthletesByPagination(firstPage).subscribe(data => {
       this.athletes = data.results;
-      this.numberOfPages = Math.ceil(data.count/6)
-      this.pagination = Array(this.numberOfPages).fill(0)
+      this.data = data;
+      this.numberOfPages = Math.ceil(data.count / maxAthletesByPage);
+      this.pagination = Array(this.numberOfPages).fill(0);
     });
   }
 
-  change(page){
-    if(page == 1){
-      this.athletesService.getAthletes().subscribe(data =>{
-        this.athletes = data.results;
-        this.data = data;
-      });
-    }
-    else{
-      this.athletesService.getAthletesByPagination(page).subscribe(data =>{
-        this.athletes = data.results;
-        this.data = data;
+  change(page) {
+    this.athletesService.getAthletesByPagination(page).subscribe(data => {
+      this.athletes = data.results;
+      this.data = data;
+    });
+  }
+
+  next() {
+    if (this.data.next) {
+      this.athletesService
+        .changePreviousNext(this.data.next)
+        .subscribe(data => {
+          this.athletes = data.results;
+          this.data = data;
+        });
+    } else {
+      this.toastr.error('No existe una siguiente página', '', {
+        positionClass: 'toast-bottom-right'
       });
     }
   }
 
-  next(){
-    if(this.data.next){
-      this.athletesService.next(this.data.next).subscribe(data =>{
-        this.athletes = data.results;
-        this.data = data;
+  previous() {
+    if (this.data.previous) {
+      this.athletesService
+        .changePreviousNext(this.data.previous)
+        .subscribe(data => {
+          this.athletes = data.results;
+          this.data = data;
+        });
+    } else {
+      this.toastr.error('No existe una página previa', '', {
+        positionClass: 'toast-bottom-right'
       });
     }
-    else{
-      this.toastr.error('No existe una siguiente página');
-    }
-    
   }
-
-  previous()
-  {
-    if(this.data.previous)
-    {
-      this.athletesService.previous(this.data.previous).subscribe(data =>{
-        this.athletes = data.results;
-        this.data = data;
-      });
-    }
-    else{
-      this.toastr.error('No existe una página previa');
-    }
-    
-  }
-
 }
