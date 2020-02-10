@@ -13,9 +13,9 @@ export class RegisterService {
     this.headers.append("Content-Type", "application/json");
   }
 
-  register(username: string, email: string, password1: string, password2: string) {
+  register(username: string, email: string, password1: string, password2: string, name: string, lastname: string) {
     return this.http
-      .post(this.environment + "/api/v1/registration/", { username, email, password1, password2 }, { headers: this.headers })
+      .post(this.environment + "/api/v1/registration/", { username, email, password1, password2, name, lastname}, { headers: this.headers })
       .pipe(map(res => res.json()));
   }
 }

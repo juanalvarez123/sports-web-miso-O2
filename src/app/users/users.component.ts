@@ -25,13 +25,15 @@ export class UsersComponent implements OnInit {
       email: ['', Validators.required],
       password1: ['', Validators.required],
       password2: ['', Validators.required],
+      name: ['', Validators.required],
+      lastname: ['', Validators.required]
     });
   }
 
   public register() {
     var controls = this.registerForm.controls
     var $this = this;
-    this.registerService.register(controls.username.value, controls.email.value, controls.password1.value, controls.password2.value)
+    this.registerService.register(controls.username.value, controls.email.value, controls.password1.value, controls.password2.value, controls.name.value, controls.lastname.value)
       .pipe(first())
       .subscribe(data => {
         console.log(data)
