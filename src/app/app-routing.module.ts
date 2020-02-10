@@ -1,4 +1,6 @@
 import { NgModule } from '@angular/core';
+import { AthletesComponent } from './athletes/athletes.component';
+
 import { RouterModule, Routes } from '@angular/router';
 import { LoginComponent } from "./login/login.component";
 import { AuthGuard } from "./helpers/auth.guard";
@@ -6,10 +8,11 @@ import { HomeComponent } from "./home/home.component";
 import { SettingsComponent } from "./settings/settings.component";
 
 const routes: Routes = [
-  {path: '', component: HomeComponent, canActivate: [AuthGuard]},
+  {path: 'athletes' , component: AthletesComponent, canActivate:[AuthGuard]},
+  {path: 'home', component: HomeComponent, canActivate: [AuthGuard]},
   {path: 'login', component: LoginComponent},
   {path: 'settings', component: SettingsComponent, canActivate: [AuthGuard]},
-  {path: '**', redirectTo: ''}
+  {path: '**', redirectTo: 'home'}
 ];
 
 @NgModule({
