@@ -1,11 +1,11 @@
-import { Component, OnInit } from "@angular/core";
-import { AthletesService } from "../services/athletes/athletes.service";
-import { ToastrService } from "ngx-toastr";
+import { Component, OnInit } from '@angular/core';
+import { AthletesService } from '../services/athletes/athletes.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
-  selector: "app-athletes",
-  templateUrl: "./athletes.component.html",
-  styleUrls: ["./athletes.component.css"]
+  selector: 'app-athletes',
+  templateUrl: './athletes.component.html',
+  styleUrls: ['./athletes.component.css']
 })
 export class AthletesComponent implements OnInit {
   public athletes: any;
@@ -45,7 +45,9 @@ export class AthletesComponent implements OnInit {
           this.data = data;
         });
     } else {
-      this.toastr.error("No existe una siguiente página", "", {positionClass: "toast-bottom-right"});
+      this.toastr.error('No existe una siguiente página', '', {
+        positionClass: 'toast-bottom-right'
+      });
     }
   }
 
@@ -58,7 +60,9 @@ export class AthletesComponent implements OnInit {
           this.data = data;
         });
     } else {
-      this.toastr.error("No existe una página previa", "", {positionClass: "toast-bottom-right"});
+      this.toastr.error('No existe una página previa', '', {
+        positionClass: 'toast-bottom-right'
+      });
     }
   }
 }
