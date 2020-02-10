@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { RegisterService } from "../services/users/users.service";
+import { ActivatedRoute, Router } from "@angular/router";
 import { first } from "rxjs/operators";
+import { AuthenticationService } from "../services/authentication/authentication.service";
 
 @Component({
   selector: 'app-users',
@@ -11,11 +13,15 @@ import { first } from "rxjs/operators";
 export class UsersComponent implements OnInit {
   registerForm: FormGroup;
   show_error = false;
+  returnUrl: string;
   msj_error = null;
 
   constructor(
     private fb: FormBuilder,
-    private registerService: RegisterService
+    private router: Router,
+    private route: ActivatedRoute,
+    private registerService: RegisterService,
+    private authenticationService: AuthenticationService
   ) {
   }
 
@@ -28,6 +34,12 @@ export class UsersComponent implements OnInit {
       name: ['', Validators.required],
       lastname: ['', Validators.required]
     });
+
+    this.returnUrl = this.route.snapshot.queryParams['return-url'] || '/';
+
+    if (this.authenticationService.isCurrentUserAuthenticated()) {
+      this.router.navigate(['']);
+    }
   }
 
   public register() {
@@ -36,7 +48,8 @@ export class UsersComponent implements OnInit {
     this.registerService.register(controls.username.value, controls.email.value, controls.password1.value, controls.password2.value, controls.name.value, controls.lastname.value)
       .pipe(first())
       .subscribe(data => {
-        console.log(data)
+        this.router.navigate([this.returnUrl]);
+        this.router.navigate(['/home']);
       }, err => {
         $this.show_error = true;
         $this.msj_error = err._body
