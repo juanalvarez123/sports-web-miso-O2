@@ -1,9 +1,2 @@
-﻿<!-- TODO Mateo, aquí va el header de la navegación -->
-<div *ngIf="authenticationService.isCurrentUserAuthenticated()">
-  <a (click)="logout()" href="#">Cerrar sesión</a>
-  <hr/>
-</div>
-
-<router-outlet></router-outlet>
-<app-header></app-header>
+﻿<app-header></app-header>
 <router-outlet></router-outlet>
