@@ -36,11 +36,15 @@ export class AuthenticationService {
       )
       .pipe(
         map(user => {
-          localStorage.setItem(this.CURRENT_USER, JSON.stringify(user));
-          this.currentUserSubject.next(user);
-          return user;
+          return this.createNewAuthenticatedUser(user);
         })
       );
+  }
+
+  public createNewAuthenticatedUser(user: AuthenticationResponse): AuthenticationResponse {
+    localStorage.setItem(this.CURRENT_USER, JSON.stringify(user));
+    this.currentUserSubject.next(user);
+    return user;
   }
 
   logout() {
@@ -48,10 +52,12 @@ export class AuthenticationService {
     headers.append('Content-Type', 'application/json');
     headers.append(
       'Authorization',
-      JSON.parse(localStorage.getItem('currentUser')).key
+      this.getCurrentUser().key
     );
+
     localStorage.removeItem(this.CURRENT_USER);
     this.currentUserSubject.next(null);
+
     return this.http
       .post(`${environment.sportsRestApiHost}/api/v1/logout/`, {
         headers: headers

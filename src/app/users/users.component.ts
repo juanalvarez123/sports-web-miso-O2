@@ -6,11 +6,10 @@ import { first } from "rxjs/operators";
 import { AuthenticationService } from "../services/authentication/authentication.service";
 
 @Component({
-  selector: 'app-users',
-  templateUrl: './users.component.html',
-  styleUrls: ['./users.component.css']
+  templateUrl: './users.component.html'
 })
 export class UsersComponent implements OnInit {
+
   registerForm: FormGroup;
   show_error = false;
   returnUrl: string;
@@ -43,18 +42,15 @@ export class UsersComponent implements OnInit {
   }
 
   public register() {
-    var controls = this.registerForm.controls 
-    var $this = this;
+    let controls = this.registerForm.controls;
     this.registerService.register(controls.username.value, controls.email.value, controls.password1.value, controls.password2.value, controls.name.value, controls.lastname.value)
       .pipe(first())
       .subscribe(data => {
-        if (this.authenticationService.isCurrentUserAuthenticated()) {
-          this.router.navigate(['home']);
-        }
+        this.authenticationService.createNewAuthenticatedUser({key: data.key});
+        this.router.navigate(['home']);
       }, err => {
-        $this.show_error = true;
-        $this.msj_error = err._body
+        this.show_error = true;
+        this.msj_error = err._body
       })
   }
-
 }

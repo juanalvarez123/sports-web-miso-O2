@@ -1,6 +1,7 @@
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
   <p class="navbar-brand">Colombia en Tokio 2020</p>
-  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav"
+          aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
   <div class="collapse navbar-collapse" id="navbarNav">
@@ -8,16 +9,21 @@
       <li class="nav-item" [ngClass]="{active: router.url == '/home'}" *ngIf="authService.isCurrentUserAuthenticated()">
         <a class="nav-link" [routerLink]="['/home']"> Home <span class="sr-only"></span></a>
       </li>
-      <li class="nav-item" [ngClass]="{active: router.url == '/athletes'}" *ngIf="authService.isCurrentUserAuthenticated()">
+      <li class="nav-item" [ngClass]="{active: router.url == '/athletes'}"
+          *ngIf="authService.isCurrentUserAuthenticated()">
         <a class="nav-link" [routerLink]="['/athletes']"> Atletas <span class="sr-only"></span></a>
       </li>
-      <li class="nav-item" *ngIf="!authService.isCurrentUserAuthenticated()">
-        <a class="nav-link">Registro</a>
+      <li class="nav-item" [ngClass]="{active: router.url == '/users'}"
+          *ngIf="!authService.isCurrentUserAuthenticated()">
+        <a class="nav-link" [routerLink]="['/users']">Registro</a>
       </li>
-      <li class="nav-item" [ngClass]="{active: router.url == '/login'}" *ngIf="!authService.isCurrentUserAuthenticated()">
-        <a class="nav-link">Login</a>
+      <li class="nav-item" [ngClass]="{active: router.url == '/login'}"
+          *ngIf="!authService.isCurrentUserAuthenticated()">
+        <a class="nav-link" [routerLink]="['/login']">Login</a>
       </li>
       <li class="nav-item active" *ngIf="authService.isCurrentUserAuthenticated()">
         <a class="nav-link" (click)="logout()">Cerrar sesión</a>
       </li>
     </ul>
+  </div>
+</nav>

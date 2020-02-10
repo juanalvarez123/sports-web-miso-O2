@@ -14,6 +14,7 @@ import { SettingsComponent } from './settings/settings.component';
 import { HeaderModule } from './header/header.module';
 import { ToastrModule } from 'ngx-toastr';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { UsersComponent } from './users/users.component';
 
 @NgModule({
   declarations: [
@@ -21,7 +22,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     AthletesComponent,
     LoginComponent,
     HomeComponent,
-    SettingsComponent
+    SettingsComponent,
+    UsersComponent
   ],
   imports: [
     BrowserModule,
