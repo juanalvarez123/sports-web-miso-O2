@@ -43,12 +43,14 @@ export class UsersComponent implements OnInit {
   }
 
   public register() {
-    var controls = this.registerForm.controls
+    var controls = this.registerForm.controls 
     var $this = this;
     this.registerService.register(controls.username.value, controls.email.value, controls.password1.value, controls.password2.value, controls.name.value, controls.lastname.value)
       .pipe(first())
       .subscribe(data => {
-        this.router.navigate(['/home']);
+        if (this.authenticationService.isCurrentUserAuthenticated()) {
+          this.router.navigate(['home']);
+        }
       }, err => {
         $this.show_error = true;
         $this.msj_error = err._body
