@@ -26,12 +26,12 @@ export class AuthenticationService {
     return this.currentUserSubject.value != null;
   }
 
-  login(username: string, email: string, password: string) {
+  login(username: string, password: string) {
     const headers = new HttpHeaders().set('Content-Type', 'application/json');
     return this.http
       .post<any>(
         `${environment.sportsRestApiHost}/api/v1/login/`,
-        { username, email, password },
+        { username, password },
         { headers }
       )
       .pipe(
