@@ -2,30 +2,54 @@
   <form [formGroup]="registerForm">
     <div class="form-group">
       <label for="username">Usuario</label>
-      <input type="text" class="form-control" formControlName="username" id="username" aria-describedby="userHelp">
+      <input type="text" class="form-control" formControlName="username" id="username" aria-describedby="userHelp"
+             [ngClass]="{ 'is-invalid': submitted && f.username.errors }"/>
+            <div *ngIf="submitted && f.username.errors" class="invalid-feedback">
+              <div *ngIf="f.username.errors.required">El usuario es requerido</div>
+            </div>
     </div>
     <div class="form-group">
       <label for="email">Email</label>
-      <input type="email" class="form-control" id="email" formControlName="email" aria-describedby="emailHelp">
+      <input type="email" class="form-control" id="email" formControlName="email" aria-describedby="emailHelp"
+            [ngClass]="{ 'is-invalid': submitted && f.email.errors }"/>
+            <div *ngIf="submitted && f.email.errors" class="invalid-feedback">
+              <div *ngIf="f.email.errors.required">El email es requerido</div>
+            </div>
     </div>
     <div class="form-group">
-      <label for="name">Nombre</label>
-      <input type="text" class="form-control" id="name" formControlName="name" aria-describedby="nameHelp">
+      <label for="name">Nombre</label> 
+      <input type="text" class="form-control" id="name" formControlName="name" aria-describedby="nameHelp"
+            [ngClass]="{ 'is-invalid': submitted && f.name.errors }"/>
+            <div *ngIf="submitted && f.name.errors" class="invalid-feedback">
+              <div *ngIf="f.name.errors.required">Digite su nombre</div>
+            </div>
     </div>
     <div class="form-group">
       <label for="lastname">Apellido</label>
-      <input type="text" class="form-control" id="lastname" formControlName="lastname" aria-describedby="lastnameHelp">
+      <input type="text" class="form-control" id="lastname" formControlName="lastname" aria-describedby="lastnameHelp"
+            [ngClass]="{ 'is-invalid': submitted && f.lastname.errors }"/>
+            <div *ngIf="submitted && f.lastname.errors" class="invalid-feedback">
+              <div *ngIf="f.lastname.errors.required">Digite su apellido</div>
+            </div>
     </div>
     <div class="form-group">
       <label for="password1">Contraseña</label>
-      <input type="password" class="form-control" id="password1" formControlName="password1">
+      <input type="password" class="form-control" id="password1" formControlName="password1"
+            [ngClass]="{ 'is-invalid': submitted && f.password1.errors }"/>
+            <div *ngIf="submitted && f.password1.errors" class="invalid-feedback">
+              <div *ngIf="f.password1.errors.required">Contraseña obligatoria</div>
+            </div>
     </div>
     <div class="form-group">
       <label for="password2">Confirmar Contraseña</label>
-      <input type="password" class="form-control" id="password2" formControlName="password2">
+      <input type="password" class="form-control" id="password2" formControlName="password2"
+            [ngClass]="{ 'is-invalid': submitted && f.password2.errors }"/>
+            <div *ngIf="submitted && f.password2.errors" class="invalid-feedback">
+              <div *ngIf="f.password2.errors.required">Contraseña obligatoria</div>
+            </div>
     </div>
     <button (click)="register()" class="btn btn-primary">Enviar</button>
-    <div *ngIf="show_error" class="alert alert-danger mt-4" role="alert">
+    <div *ngIf="show_error" class="alert alert-danger mt-3 mb-0" role="alert">
       {{msj_error}}
     </div>
   </form>
