@@ -19,6 +19,11 @@ export class AthletesComponent implements OnInit {
   ) {}
 
   ngOnInit() {
+    const tag = document.createElement('script');
+    tag.src = 'https://www.youtube.com/iframe_api';
+    const firstScriptTag = document.getElementsByTagName('script')[0];
+    firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+
     const firstPage = 1;
     const maxAthletesByPage = 6;
     this.athletesService.getAthletesByPagination(firstPage).subscribe(data => {

@@ -47,7 +47,7 @@ export class UsersComponent implements OnInit {
       .pipe(first())
       .subscribe(data => {
         this.authenticationService.createNewAuthenticatedUser({key: data.key});
-        this.router.navigate(['home']);
+        this.router.navigate(['athletes']);
       }, err => {
         this.show_error = true;
         this.msj_error = err._body
