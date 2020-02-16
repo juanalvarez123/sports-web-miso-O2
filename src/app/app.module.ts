@@ -9,7 +9,6 @@ import { HttpModule } from '@angular/http';
 import { LoginComponent } from './login/login.component';
 import { HTTP_INTERCEPTORS, HttpClientModule } from "@angular/common/http";
 import { ErrorInterceptor } from "./helpers/error.interceptor";
-import { HomeComponent } from './home/home.component';
 import { SettingsComponent } from './settings/settings.component';
 import { HeaderModule } from './header/header.module';
 import { ToastrModule } from 'ngx-toastr';
@@ -22,7 +21,6 @@ import {YouTubePlayerModule} from '@angular/youtube-player';
     AppComponent,
     AthletesComponent,
     LoginComponent,
-    HomeComponent,
     SettingsComponent,
     UsersComponent
   ],
