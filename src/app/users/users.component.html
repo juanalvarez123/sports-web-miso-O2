@@ -1,0 +1,32 @@
+<div class="card mx-auto px-4 pt-4 pb-4 mt-3 mb-3" style="width: 80%;">
+  <form [formGroup]="registerForm">
+    <div class="form-group">
+      <label for="username">Usuario</label>
+      <input type="text" class="form-control" formControlName="username" id="username" aria-describedby="userHelp">
+    </div>
+    <div class="form-group">
+      <label for="email">Email</label>
+      <input type="email" class="form-control" id="email" formControlName="email" aria-describedby="emailHelp">
+    </div>
+    <div class="form-group">
+      <label for="name">Nombre</label>
+      <input type="text" class="form-control" id="name" formControlName="name" aria-describedby="nameHelp">
+    </div>
+    <div class="form-group">
+      <label for="lastname">Apellido</label>
+      <input type="text" class="form-control" id="lastname" formControlName="lastname" aria-describedby="lastnameHelp">
+    </div>
+    <div class="form-group">
+      <label for="password1">Contraseña</label>
+      <input type="password" class="form-control" id="password1" formControlName="password1">
+    </div>
+    <div class="form-group">
+      <label for="password2">Confirmar Contraseña</label>
+      <input type="password" class="form-control" id="password2" formControlName="password2">
+    </div>
+    <button (click)="register()" class="btn btn-primary">Enviar</button>
+    <div *ngIf="show_error" class="alert alert-danger mt-4" role="alert">
+      {{msj_error}}
+    </div>
+  </form>
+</div>
