@@ -18,3 +18,17 @@ ul{
     color:#007bff;
     cursor: pointer;
 }
+
+/*
+TODO: PASAR CSS A DETALLE ATLETA, modalCss y modal-body
+*/
+
+.modalCss{
+    height: 70%;
+    width: 70%;
+    margin: auto;
+}
+
+.modal-body{
+    margin: auto;
+}

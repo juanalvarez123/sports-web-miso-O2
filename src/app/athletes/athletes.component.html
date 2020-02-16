@@ -1,6 +1,27 @@
+<!-- TODO: PASAR ESTE DIV A DETALLE ATLETA-->
+<div class="modal" id="athleteModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog-centered modalCss" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Video de participación</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <!--TODO:  youtubeid con atleta [videoId]="{{participation.youtubeId}}" SOLO CUANDO YA ESTÉ EN DETALLE ATLETA PARA QUE SEA MÁS FÁCIL-->
+        <youtube-player videoId="tbneQDc2H3I"></youtube-player>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
 <div class="container">
   <div class="row pt-5">
-    <div class="col-lg-4 col-xl-4 col-sm-6 col-md-6 col-12 pt-5" *ngFor="let athlete of athletes">
+    <div class="col-lg-4 col-xl-4 col-sm-6 col-md-6 col-12 pt-5" *ngFor="let athlete of athletes" data-toggle="modal" data-target="#athleteModal">
       <div class="card" style="width: 18rem;">
         <img class="card-img-top" [src]="athlete.picture" alt="imagen_atleta">
         <div class="card-body">
@@ -49,3 +70,4 @@
 
   </div>
 </div>
+
