@@ -15,7 +15,7 @@ export class UsersComponent implements OnInit {
   returnUrl: string;
   msj_error = null;
   submitted = false;
-  
+
   constructor(
     private fb: FormBuilder,
     private router: Router,
@@ -48,8 +48,9 @@ export class UsersComponent implements OnInit {
 
   public register() {
     this.submitted = true;
+    this.show_error = false;
 
-    if (this.registerForm.invalid) {
+    if (this.registerForm.invalid || !this.areTheSamePasswords()) {
       return;
     }
 
@@ -62,8 +63,20 @@ export class UsersComponent implements OnInit {
       }, err => {
         this.show_error = true;
         this.msj_error = err._body;
-        var msj2 = this.msj_error.split('"');
+        let msj2 = this.msj_error.split('"');
         this.msj_error = msj2[3]
       })
+  }
+
+  areTheSamePasswords() {
+    let pass = this.registerForm.get('password1').value;
+    let confirmPass = this.registerForm.get('password2').value;
+
+    if (pass !== confirmPass) {
+      this.show_error = true;
+      this.msj_error = 'Las contraseñas no son iguales';
+    }
+
+    return pass === confirmPass ? true : false;
   }
 }
