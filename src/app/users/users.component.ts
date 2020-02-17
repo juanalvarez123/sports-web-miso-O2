@@ -14,7 +14,8 @@ export class UsersComponent implements OnInit {
   show_error = false;
   returnUrl: string;
   msj_error = null;
-
+  submitted = false;
+  
   constructor(
     private fb: FormBuilder,
     private router: Router,
@@ -41,7 +42,17 @@ export class UsersComponent implements OnInit {
     }
   }
 
+  get f() {
+    return this.registerForm.controls;
+  }
+
   public register() {
+    this.submitted = true;
+
+    if (this.registerForm.invalid) {
+      return;
+    }
+
     let controls = this.registerForm.controls;
     this.registerService.register(controls.username.value, controls.email.value, controls.password1.value, controls.password2.value, controls.name.value, controls.lastname.value)
       .pipe(first())
@@ -50,7 +61,9 @@ export class UsersComponent implements OnInit {
         this.router.navigate(['athletes']);
       }, err => {
         this.show_error = true;
-        this.msj_error = err._body
+        this.msj_error = err._body;
+        var msj2 = this.msj_error.split('"');
+        this.msj_error = msj2[3]
       })
   }
 }
