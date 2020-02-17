@@ -4,6 +4,7 @@ import { map } from 'rxjs/operators';
 import { environment } from '../../../environments/environment';
 import { HttpParams } from '@angular/common/http';
 import { AuthenticationService } from '../authentication/authentication.service';
+import { Athlete } from "../../model/athletes.model";
 
 @Injectable({
   providedIn: 'root'
@@ -20,12 +21,6 @@ export class AthletesService {
     this.headers.append('Content-Type', 'application/json');
   }
 
-  public getAthletes() {
-    return this.http
-      .get(this.environment + '/api/v1/athletes/', { headers: this.headers })
-      .pipe(map(res => res.json()));
-  }
-
   public getAthletesByPagination(param) {
     return this.http
       .get(this.environment + '/api/v1/athletes/', {
@@ -39,5 +34,13 @@ export class AthletesService {
     return this.http
       .get(url, { headers: this.headers })
       .pipe(map(res => res.json()));
+  }
+
+  public getAthleteWithDetails(id) {
+    return this.http
+    .get(this.environment + '/api/v1/athletes/' + id + '/', {
+      headers: this.headers }
+     )
+    .pipe(map(res => res.json()));
   }
 }

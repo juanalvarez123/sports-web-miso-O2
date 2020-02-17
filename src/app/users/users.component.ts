@@ -14,6 +14,7 @@ export class UsersComponent implements OnInit {
   show_error = false;
   returnUrl: string;
   msj_error = null;
+  submitted = false;
 
   constructor(
     private fb: FormBuilder,
@@ -41,16 +42,41 @@ export class UsersComponent implements OnInit {
     }
   }
 
+  get f() {
+    return this.registerForm.controls;
+  }
+
   public register() {
+    this.submitted = true;
+    this.show_error = false;
+
+    if (this.registerForm.invalid || !this.areTheSamePasswords()) {
+      return;
+    }
+
     let controls = this.registerForm.controls;
     this.registerService.register(controls.username.value, controls.email.value, controls.password1.value, controls.password2.value, controls.name.value, controls.lastname.value)
       .pipe(first())
       .subscribe(data => {
         this.authenticationService.createNewAuthenticatedUser({key: data.key});
-        this.router.navigate(['home']);
+        this.router.navigate(['athletes']);
       }, err => {
         this.show_error = true;
-        this.msj_error = err._body
+        this.msj_error = err._body;
+        let msj2 = this.msj_error.split('"');
+        this.msj_error = msj2[3]
       })
+  }
+
+  areTheSamePasswords() {
+    let pass = this.registerForm.get('password1').value;
+    let confirmPass = this.registerForm.get('password2').value;
+
+    if (pass !== confirmPass) {
+      this.show_error = true;
+      this.msj_error = 'Las contraseñas no son iguales';
+    }
+
+    return pass === confirmPass ? true : false;
   }
 }

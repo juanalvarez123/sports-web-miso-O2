@@ -9,21 +9,24 @@ import { HttpModule } from '@angular/http';
 import { LoginComponent } from './login/login.component';
 import { HTTP_INTERCEPTORS, HttpClientModule } from "@angular/common/http";
 import { ErrorInterceptor } from "./helpers/error.interceptor";
-import { HomeComponent } from './home/home.component';
 import { SettingsComponent } from './settings/settings.component';
 import { HeaderModule } from './header/header.module';
 import { ToastrModule } from 'ngx-toastr';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { UsersComponent } from './users/users.component';
+import { YouTubePlayerModule } from '@angular/youtube-player';
+import { ParticipationsComponent } from './participations/participations.component';
+import { AthleteDetailComponent } from './athletes/athlete-detail/athlete-detail.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     AthletesComponent,
     LoginComponent,
-    HomeComponent,
     SettingsComponent,
-    UsersComponent
+    UsersComponent,
+    ParticipationsComponent,
+    AthleteDetailComponent
   ],
   imports: [
     BrowserModule,
@@ -35,7 +38,8 @@ import { UsersComponent } from './users/users.component';
     HttpClientModule,
     HeaderModule,
     ToastrModule.forRoot(),
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    YouTubePlayerModule
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true }

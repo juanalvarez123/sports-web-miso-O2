@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AthletesService } from '../services/athletes/athletes.service';
 import { ToastrService } from 'ngx-toastr';
+import { Athlete, Participation } from "../model/athletes.model";
 
 @Component({
   selector: 'app-athletes',
@@ -8,10 +9,13 @@ import { ToastrService } from 'ngx-toastr';
   styleUrls: ['./athletes.component.css']
 })
 export class AthletesComponent implements OnInit {
-  public athletes: any;
+  public athletes: Athlete[] = [];
   public numberOfPages: any;
   public pagination: any;
   public data: any;
+
+  public showAthleteDetail: boolean = false;
+  public selectedAthlete: Athlete = new Athlete();
 
   constructor(
     private athletesService: AthletesService,
@@ -64,5 +68,18 @@ export class AthletesComponent implements OnInit {
         positionClass: 'toast-bottom-right'
       });
     }
+  }
+
+  public showAthleteParticipations(athlete: Athlete) : void {
+    this.athletesService.getAthleteWithDetails(athlete.id)
+    .subscribe(data => {
+      this.selectedAthlete = data;
+      this.showAthleteDetail = true;
+    });
+  }
+
+  public closeAthleteParticipations() : void {
+    this.selectedAthlete = new Athlete();
+    this.showAthleteDetail = false;
   }
 }
