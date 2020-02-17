@@ -1,6 +1,9 @@
 <div class="row pt-3">
   <div class="col-lg-4 col-xl-4 col-sm-6 col-md-6 col-12">
-    <table class="table table-hover" style="width: 900px;">
+    <div class="alert alert-warning" role="alert" style="width: 900px;" *ngIf="athlete.participations.length === 0">
+      Sin participaciones
+    </div>
+    <table class="table table-hover" style="width: 900px;" *ngIf="athlete.participations.length !== 0">
       <thead>
       <tr>
         <th scope="col">#</th>
