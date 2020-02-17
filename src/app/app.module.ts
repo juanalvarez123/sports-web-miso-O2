@@ -14,7 +14,9 @@ import { HeaderModule } from './header/header.module';
 import { ToastrModule } from 'ngx-toastr';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { UsersComponent } from './users/users.component';
-import {YouTubePlayerModule} from '@angular/youtube-player';
+import { YouTubePlayerModule } from '@angular/youtube-player';
+import { ParticipationsComponent } from './participations/participations.component';
+import { AthleteDetailComponent } from './athletes/athlete-detail/athlete-detail.component';
 
 @NgModule({
   declarations: [
@@ -22,7 +24,9 @@ import {YouTubePlayerModule} from '@angular/youtube-player';
     AthletesComponent,
     LoginComponent,
     SettingsComponent,
-    UsersComponent
+    UsersComponent,
+    ParticipationsComponent,
+    AthleteDetailComponent
   ],
   imports: [
     BrowserModule,

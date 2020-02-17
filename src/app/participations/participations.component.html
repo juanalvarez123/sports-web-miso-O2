@@ -1,0 +1,50 @@
+<div class="row pt-3">
+  <div class="col-lg-4 col-xl-4 col-sm-6 col-md-6 col-12">
+    <table class="table table-hover" style="width: 900px;">
+      <thead>
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">Fecha</th>
+        <th scope="col">Hora</th>
+        <th scope="col">Deporte</th>
+        <th scope="col">Modalidad</th>
+        <th scope="col">Resultado</th>
+        <th scope="col">Video</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let participation of athlete.participations, let i = index">
+        <th scope="row">{{ i + 1 }}</th>
+        <td>{{ participation.datetime  | date:'dd/MM/yyyy' }}</td>
+        <td>{{ participation.datetime  | date:'HH:mm' }}</td>
+        <td>{{ participation.modality.sport.name }}</td>
+        <td>{{ participation.modality.name }}</td>
+        <td>{{ participation.result }}</td>
+        <td>
+          <button class="btn btn-danger" (click)="selectVideo(participation)" data-toggle="modal"
+                  data-target="#videoModal">&#x25B9;</button>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<div class="modal" id="videoModal" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
+  <div class="modal-dialog modalCss" role="document" style="max-width: 612px;">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="modalLabel">Video de participación</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <youtube-player width="580px" videoId="{{ selectedParticipation.youtube_id }}"></youtube-player>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+      </div>
+    </div>
+  </div>
+</div>

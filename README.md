@@ -6,7 +6,18 @@
 ## Deployment
 [Frontend](https://sports-web-miso-o2.herokuapp.com/)
 
-## How to configure it
+## Environment setup
+
+1. Install NodeJS: Download and install the LTS version from [https://nodejs.org/en/](https://nodejs.org/en/)
+
+2. Installing Angular CLI:
+
+```bash
+npm install -g angular-cli
+npm install -g @angular/cli@latest
+```
+
+3. Install dependencies
 
 ```bash
 npm install

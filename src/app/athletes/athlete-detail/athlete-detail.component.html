@@ -1,0 +1,22 @@
+<div class="card" style="width: 900px;">
+  <div class="row no-gutters">
+    <div class="col-md-4 p-2">
+      <img [src]="athlete.picture" class="card-img" alt="{{ athlete.first_name }} {{ athlete.last_name }}">
+      <div class="row">
+        <div class="col-lg-3 col-sm-4 col-6 pt-2" *ngFor="let picture of athlete.sports">
+          <img class="sport_icon p-2" [src]="picture.icon" [alt]="picture.name">
+        </div>
+      </div>
+    </div>
+    <div class="col-md-8">
+      <div class="card-body">
+        <h5 class="card-title">{{ athlete.first_name }} {{ athlete.last_name }}</h5>
+        <p class="card-text">Altura: {{ athlete.height }} cm</p>
+        <p class="card-text">Peso: {{ athlete.weight }} kg</p>
+        <p class="card-text">Día de nacimiento: {{ athlete.birth_date | date:'dd/MM/yyyy' }}</p>
+        <p class="card-text">Lugar de nacimiento: {{ athlete.birth_place }}</p>
+        <p class="card-text">Entrenador: {{ athlete.trainer.first_name }} {{ athlete.trainer.last_name }}</p>
+      </div>
+    </div>
+  </div>
+</div>
