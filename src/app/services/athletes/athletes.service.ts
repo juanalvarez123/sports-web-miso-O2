@@ -1,10 +1,8 @@
 import { Injectable } from '@angular/core';
-import { Http, Headers } from '@angular/http';
+import { Headers, Http } from '@angular/http';
 import { map } from 'rxjs/operators';
 import { environment } from '../../../environments/environment';
-import { HttpParams } from '@angular/common/http';
 import { AuthenticationService } from '../authentication/authentication.service';
-import { Athlete } from "../../model/athletes.model";
 
 @Injectable({
   providedIn: 'root'
