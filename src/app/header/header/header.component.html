@@ -6,17 +6,20 @@
   </button>
   <div class="collapse navbar-collapse" id="navbarNav">
     <ul class="nav navbar-nav ml-auto">
-      <li class="nav-item" [ngClass]="{active: router.url == '/athletes'}"
+      <li class="nav-item" [ngClass]="{active: router.url != '/athletes'}"
           *ngIf="authService.isCurrentUserAuthenticated()">
-        <a class="nav-link" [routerLink]="['/athletes']"> Atletas <span class="sr-only"></span></a>
+        <a class="nav-link" [routerLink]="['/athletes']"
+           [ngClass]="{disabled: router.url == '/athletes'}">Atletas</a>
       </li>
-      <li class="nav-item" [ngClass]="{active: router.url == '/users'}"
+      <li class="nav-item" [ngClass]="{active: router.url != '/users'}"
           *ngIf="!authService.isCurrentUserAuthenticated()">
-        <a class="nav-link" [routerLink]="['/users']">Registro</a>
+        <a class="nav-link" [routerLink]="['/users']"
+           [ngClass]="{disabled: router.url == '/users'}">Registro</a>
       </li>
-      <li class="nav-item" [ngClass]="{active: router.url == '/login'}"
+      <li class="nav-item" [ngClass]="{active: router.url != '/login'}"
           *ngIf="!authService.isCurrentUserAuthenticated()">
-        <a class="nav-link" [routerLink]="['/login']">Login</a>
+        <a class="nav-link" [routerLink]="['/login']"
+           [ngClass]="{disabled: router.url == '/login'}">Login</a>
       </li>
       <li class="nav-item active" *ngIf="authService.isCurrentUserAuthenticated()">
         <a class="nav-link" (click)="logout()">Cerrar sesión</a>

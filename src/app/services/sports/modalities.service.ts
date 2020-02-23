@@ -7,7 +7,7 @@ import { AuthenticationService } from '../authentication/authentication.service'
 @Injectable({
   providedIn: 'root'
 })
-export class AthletesService {
+export class ModalitiesService {
   public headers: Headers;
   public environment: any = environment.sportsRestApiHost;
 
@@ -19,26 +19,12 @@ export class AthletesService {
     this.headers.append('Content-Type', 'application/json');
   }
 
-  public getAthletesByPagination(param) {
+  public getModalitiesBySport(sportId: number) {
     return this.http
-      .get(this.environment + '/api/v1/athletes/', {
-        headers: this.headers,
-        params: { page: param }
-      })
-      .pipe(map(res => res.json()));
-  }
-
-  public changePreviousNext(url) {
-    return this.http
-      .get(url, { headers: this.headers })
-      .pipe(map(res => res.json()));
-  }
-
-  public getAthleteWithDetails(id) {
-    return this.http
-    .get(this.environment + '/api/v1/athletes/' + id + '/', {
-      headers: this.headers }
-     )
+    .get(this.environment + '/api/v1/modalities/', {
+      headers: this.headers,
+      params: { sport: sportId }
+    })
     .pipe(map(res => res.json()));
   }
 }
