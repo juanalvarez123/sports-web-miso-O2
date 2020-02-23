@@ -48,7 +48,11 @@
               <div *ngIf="f.password2.errors.required">Contraseña obligatoria</div>
             </div>
     </div>
-    <button (click)="register()" class="btn btn-primary">Enviar</button>
+    <div class="form-group">
+      <button (click)="register()" class="btn btn-primary">Enviar</button>
+      &nbsp;
+      <button class="btn btn-secondary" [routerLink]="['/login']">Cancelar</button>
+    </div>
     <div *ngIf="show_error" class="alert alert-danger mt-3 mb-0" role="alert">
       {{msj_error}}
     </div>
