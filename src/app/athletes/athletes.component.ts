@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { AthletesService } from '../services/athletes/athletes.service';
 import { ToastrService } from 'ngx-toastr';
-import { Athlete, Participation } from "../model/athletes.model";
+import { Athlete, Modality, Sport } from "../model/athletes.model";
+import { ModalitiesService } from "../services/sports/modalities.service";
 
 @Component({
   selector: 'app-athletes',
@@ -10,16 +11,22 @@ import { Athlete, Participation } from "../model/athletes.model";
 })
 export class AthletesComponent implements OnInit {
   public athletes: Athlete[] = [];
+  public sports: Sport[] = [];
+  public modalities: Modality[] = [];
   public numberOfPages: any;
   public pagination: any;
   public data: any;
 
+  public allRecords: number = -1;
   public showAthleteDetail: boolean = false;
   public selectedAthlete: Athlete = new Athlete();
+  public selectedModalityId: number = this.allRecords;
+  public selectedSportId: number = this.allRecords;
 
   constructor(
     private athletesService: AthletesService,
-    private toastr: ToastrService
+    private toastrService: ToastrService,
+    private modalitiesService: ModalitiesService
   ) {}
 
   ngOnInit() {
@@ -49,7 +56,7 @@ export class AthletesComponent implements OnInit {
           this.data = data;
         });
     } else {
-      this.toastr.error('No existe una siguiente página', '', {
+      this.toastrService.error('No existe una siguiente página', '', {
         positionClass: 'toast-bottom-right'
       });
     }
@@ -64,7 +71,7 @@ export class AthletesComponent implements OnInit {
           this.data = data;
         });
     } else {
-      this.toastr.error('No existe una página previa', '', {
+      this.toastrService.error('No existe una página previa', '', {
         positionClass: 'toast-bottom-right'
       });
     }
@@ -81,5 +88,29 @@ export class AthletesComponent implements OnInit {
   public closeAthleteParticipations() : void {
     this.selectedAthlete = new Athlete();
     this.showAthleteDetail = false;
+  }
+
+  // TODO, llamar a este método cuando se hace un cambio en el filtro de deportes
+  public onChangeSport() : void {
+    this.selectedModalityId = this.allRecords;
+
+    if (this.selectedSportId === this.allRecords) {
+      this.modalities = [];
+
+      // TODO, aquí se debería llamar al servicio de busqueda de atletas SIN filtro de deporte
+    } else {
+      this.modalitiesService.getModalitiesBySport(this.selectedSportId).subscribe(data => {
+        this.modalities = data;
+
+        // TODO, aquí se debería llamar a servicio de busqueda de atletas usando SOLO el valor de 'selectedSportId'
+      });
+    }
+  }
+
+  // TODO, llamar al servicio de busqueda de atletas por el deporte seleccionado y la modalidad seleccionada usando
+  //  los valores de 'selectedSportId' y 'selectedModalityId'. Si el valor de 'selectedModalityId' es "-1" no hay que
+  //  enviar el filtro de modalidad
+  public onChangeModality() : void {
+    console.log(this.selectedModalityId);
   }
 }
