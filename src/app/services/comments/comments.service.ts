@@ -28,5 +28,3 @@ export class CommentService {
     .pipe(map(res => res.json()));
   }
 }
-
-
