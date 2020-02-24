@@ -24,7 +24,7 @@ export class AthletesComponent implements OnInit {
   public selectedModalityId: number = this.allRecords;
   public selectedSportId: number = this.allRecords;
 
-  public sportsList: any;
+  public sportsList: Sport[];
   public maxAthletesByPage = 6;
 
   constructor(

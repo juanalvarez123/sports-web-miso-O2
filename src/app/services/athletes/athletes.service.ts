@@ -43,7 +43,7 @@ export class AthletesService {
   }
 
   public getFilteredSportsAndModalities(idSport, idModality, pages) {
-    const param2 = {
+    const queryParams = {
       participation__modality__sport: idSport,
       participation__modality: idModality,
       page: pages
@@ -51,7 +51,7 @@ export class AthletesService {
     return this.http
       .get(this.environment + '/api/v1/athletes/', {
         headers: this.headers,
-        params: param2
+        params: queryParams
       })
       .pipe(map(res => res.json()));
   }
