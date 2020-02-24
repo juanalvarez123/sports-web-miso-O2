@@ -1,3 +1,5 @@
+import { AuthenticatedUser } from "./authentication.model";
+
 export class Athlete {
   id: number;
   trainer: Trainer = new Trainer();
@@ -30,13 +32,13 @@ export class Participation {
   datetime: Date;
   youtube_id: string;
   result: number;
-  commentaries: Comment[];
+  commentaries: Commentary[];
 }
 
-export class Comment {
+export class Commentary {
   datetime: Date;
   comment: string;
-  participation: number;
+  user: AuthenticatedUser;
 }
 
 export class Modality {

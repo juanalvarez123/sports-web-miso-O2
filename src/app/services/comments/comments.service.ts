@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Http, Headers } from '@angular/http';
+import { Headers, Http } from '@angular/http';
 import { map } from 'rxjs/operators';
 import { environment } from '../../../environments/environment';
 import { AuthenticationService } from '../authentication/authentication.service';
@@ -17,19 +17,16 @@ export class CommentService {
     this.headers.append('Content-Type', 'application/json');
   }
 
-  addComment(comment: string, participationId: number) {
+  public addCommentary(comment: string, participationId: number) {
     return this.http
-      .post(this.environment + "/api/v1/commentaries/",
-         {
-            comment: comment,
-            participation: participationId,
-            user: 1
-// TO DO: La variable user queda pendiente debido a que no existe en el backend, por el momento esta quemada,
-//        y lo ideal es quede como la siguiente linea
-//            user: this.authService.getCurrentUser().participationId
-          }, { headers: this.headers })
-      .pipe(map(res => res.json()));
+    .post(this.environment + "/api/v1/commentaries/",
+      {
+        comment: comment,
+        participation: participationId,
+        user: this.authService.getCurrentUser().user.id
+      }, { headers: this.headers })
+    .pipe(map(res => res.json()));
   }
 }
 
-  
+
