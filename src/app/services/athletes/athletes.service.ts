@@ -36,9 +36,35 @@ export class AthletesService {
 
   public getAthleteWithDetails(id) {
     return this.http
-    .get(this.environment + '/api/v1/athletes/' + id + '/', {
-      headers: this.headers }
-     )
-    .pipe(map(res => res.json()));
+      .get(this.environment + '/api/v1/athletes/' + id + '/', {
+        headers: this.headers
+      })
+      .pipe(map(res => res.json()));
+  }
+
+  public getFilteredSportsAndModalities(idSport, idModality, pages) {
+    const param2 = {
+      participation__modality__sport: idSport,
+      participation__modality: idModality,
+      page: pages
+    };
+    return this.http
+      .get(this.environment + '/api/v1/athletes/', {
+        headers: this.headers,
+        params: param2
+      })
+      .pipe(map(res => res.json()));
+  }
+
+  public getFilteredSports(idSport){
+    const param = {
+      participation__modality__sport: idSport,
+    };
+    return this.http
+      .get(this.environment + '/api/v1/athletes/', {
+        headers: this.headers,
+        params: param
+      })
+      .pipe(map(res => res.json()));
   }
 }
