@@ -22,7 +22,7 @@ export class AthletesService {
   public getAthletesByPagination(param) {
     return this.http
       .get(this.environment + '/api/v1/athletes/', {
-        headers: this.headers,
+        headers: this.headers, 
         params: { page: param }
       })
       .pipe(map(res => res.json()));

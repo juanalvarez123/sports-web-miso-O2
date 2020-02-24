@@ -22,7 +22,7 @@ export class AthletesComponent implements OnInit {
   public selectedAthlete: Athlete = new Athlete();
   public selectedModalityId: number = this.allRecords;
   public selectedSportId: number = this.allRecords;
-
+ 
   constructor(
     private athletesService: AthletesService,
     private toastrService: ToastrService,

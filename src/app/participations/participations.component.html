@@ -34,7 +34,7 @@
 </div>
 
 <div class="modal" id="videoModal" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
-  <div class="modal-dialog modalCss" role="document" style="max-width: 612px;">
+  <div class="modal-dialog modalCss" role="document" style="max-width: 900px;">
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title" id="modalLabel">Video de participación</h5>
@@ -48,6 +48,35 @@
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
       </div>
-    </div>
+    
+      <div>
+        <div class="alert alert-warning" role="alert" style="width: 900px;" *ngIf="selectedParticipation.commentaries.length === 0">
+          Sin comentarios
+        </div>
+        <table class="table table-hover" style="width: 900px;" *ngIf="selectedParticipation.commentaries.length !== 0">
+          <thead>
+          <tr>
+            <th scope="col">Comentario</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr *ngFor="let comment of selectedParticipation.commentaries, let i = index">
+            <th scope="row">{{ i + 1 }}</th>
+            <td>{{ comment.comment }}</td>
+            
+          </tr>
+          </tbody>
+        </table>
+      </div>
+      
+        <div class="card mx-auto px-4 pt-4 pb-4 mt-3 mb-3" style="width: 80%;">
+          <div class="form-group">
+            <label for="name">Añadir comentario</label>
+            <input type="text" class="form-control" [(ngModel)]="newComment"/>
+          </div>
+          <div class="form-group">
+            <button (click)="addComment()" class="btn btn-primary">Enviar</button>
+          </div>
+        </div>
   </div>
 </div>

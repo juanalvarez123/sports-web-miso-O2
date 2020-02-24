@@ -30,6 +30,13 @@ export class Participation {
   datetime: Date;
   youtube_id: string;
   result: number;
+  commentaries: Comment[];
+}
+
+export class Comment {
+  datetime: Date;
+  comment: string;
+  participation: number;
 }
 
 export class Modality {
