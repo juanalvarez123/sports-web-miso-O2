@@ -1,10 +1,8 @@
 import { Injectable } from '@angular/core';
-import { Http, Headers } from '@angular/http';
+import { Headers, Http } from '@angular/http';
 import { map } from 'rxjs/operators';
 import { environment } from '../../../environments/environment';
-import { HttpParams } from '@angular/common/http';
 import { AuthenticationService } from '../authentication/authentication.service';
-import { Athlete } from "../../model/athletes.model";
 
 @Injectable({
   providedIn: 'root'
@@ -38,9 +36,35 @@ export class AthletesService {
 
   public getAthleteWithDetails(id) {
     return this.http
-    .get(this.environment + '/api/v1/athletes/' + id + '/', {
-      headers: this.headers }
-     )
-    .pipe(map(res => res.json()));
+      .get(this.environment + '/api/v1/athletes/' + id + '/', {
+        headers: this.headers
+      })
+      .pipe(map(res => res.json()));
+  }
+
+  public getFilteredSportsAndModalities(idSport, idModality, pages) {
+    const queryParams = {
+      participation__modality__sport: idSport,
+      participation__modality: idModality,
+      page: pages
+    };
+    return this.http
+      .get(this.environment + '/api/v1/athletes/', {
+        headers: this.headers,
+        params: queryParams
+      })
+      .pipe(map(res => res.json()));
+  }
+
+  public getFilteredSports(idSport){
+    const param = {
+      participation__modality__sport: idSport,
+    };
+    return this.http
+      .get(this.environment + '/api/v1/athletes/', {
+        headers: this.headers,
+        params: param
+      })
+      .pipe(map(res => res.json()));
   }
 }

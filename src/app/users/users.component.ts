@@ -58,7 +58,7 @@ export class UsersComponent implements OnInit {
     this.registerService.register(controls.username.value, controls.email.value, controls.password1.value, controls.password2.value, controls.name.value, controls.lastname.value)
       .pipe(first())
       .subscribe(data => {
-        this.authenticationService.createNewAuthenticatedUser({key: data.key});
+        this.authenticationService.createNewAuthenticatedUser(data);
         this.router.navigate(['athletes']);
       }, err => {
         this.show_error = true;

@@ -1,7 +1,31 @@
 <div class="container">
   <div class="row pt-5" [hidden]="showAthleteDetail">
+    <div class="col-6">
+      <div class="input-group">
+        <div class="input-group-prepend">
+          <span class="input-group-text" for="select-sports">Deporte</span>
+        </div>
+        <select class="form-control" id="select-sports" [(ngModel)]="selectedSportId" (ngModelChange)="onChangeSport()">
+          <option [value]="allRecords">Todos ...</option>
+          <option *ngFor="let sport of sportsList" [value]="sport.id">{{ sport.name }}</option>
+        </select>
+      </div>
+    </div>
+    <div class="col-6">
+      <div class="input-group">
+        <div class="input-group-prepend">
+          <span class="input-group-text" for="select-modality">Modalidad</span>
+        </div>
+        <select class="form-control" id="select-modality" [(ngModel)]="selectedModalityId" (ngModelChange)="onChangeModality()">
+          <option [value]="allRecords">Todas ...</option>
+          <option *ngFor="let modality of modalities" [value]="modality.id">{{ modality.name }}</option>
+        </select>
+      </div>
+    </div>
+  </div>
+  <div class="row pt-5" [hidden]="showAthleteDetail">
     <div class="col-lg-4 col-xl-4 col-sm-6 col-md-6 col-12 pt-5" style=" cursor: pointer"
-         (click)="showAthleteParticipations(athlete)" *ngFor="let athlete of athletes">
+         (click)="showAthleteParticipations(athlete)" *ngFor="let athlete of athletes" >
       <div class="card" style="width: 18rem;">
         <img class="card-img-top" [src]="athlete.picture" alt="{{ athlete.first_name }} {{ athlete.last_name }}">
         <div class="card-body">
