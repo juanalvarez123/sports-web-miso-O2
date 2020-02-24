@@ -19,11 +19,11 @@ export class AthletesService {
     this.headers.append('Content-Type', 'application/json');
   }
 
-  public getAthletesByPagination(param) {
+  public getAthletesByPagination(page: number) {
     return this.http
       .get(this.environment + '/api/v1/athletes/', {
         headers: this.headers,
-        params: { page: param }
+        params: { page: page }
       })
       .pipe(map(res => res.json()));
   }
@@ -34,7 +34,7 @@ export class AthletesService {
       .pipe(map(res => res.json()));
   }
 
-  public getAthleteWithDetails(id) {
+  public getAthleteWithDetails(id: number) {
     return this.http
       .get(this.environment + '/api/v1/athletes/' + id + '/', {
         headers: this.headers
@@ -42,28 +42,29 @@ export class AthletesService {
       .pipe(map(res => res.json()));
   }
 
-  public getFilteredSportsAndModalities(idSport, idModality, pages) {
-    const queryParams = {
+  public getAthletesFilteredBySportAndModality(idSport: number, idModality: number, page: number) {
+    const params = {
       participation__modality__sport: idSport,
       participation__modality: idModality,
-      page: pages
+      page: page
     };
     return this.http
       .get(this.environment + '/api/v1/athletes/', {
         headers: this.headers,
-        params: queryParams
+        params: params
       })
       .pipe(map(res => res.json()));
   }
 
-  public getFilteredSports(idSport){
-    const param = {
+  public getAthletesFilteredBySport(idSport: number, page: number) {
+    const params = {
       participation__modality__sport: idSport,
+      page: page
     };
     return this.http
       .get(this.environment + '/api/v1/athletes/', {
         headers: this.headers,
-        params: param
+        params: params
       })
       .pipe(map(res => res.json()));
   }
