@@ -119,9 +119,9 @@ export class AthletesComponent implements OnInit {
     }
   }
 
-  getAthletesBySportId(sportId) {
+  private getAthletesBySportId(sportId: number): void {
     this.athletesService
-      .getFilteredSports(this.selectedSportId)
+      .getFilteredSports(sportId)
       .subscribe(filteredAthletes => {
         this.athletes = filteredAthletes.results;
         this.numberOfPages = Math.ceil(
@@ -133,7 +133,7 @@ export class AthletesComponent implements OnInit {
   }
 
   public onChangeModality(): void {
-    if (this.selectedModalityId === this.allRecords) {
+    if (this.selectedModalityId == this.allRecords) {
       this.getAthletesBySportId(this.selectedSportId);
     } else {
       this.athletesService
