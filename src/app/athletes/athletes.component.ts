@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { AthletesService } from '../services/athletes/athletes.service';
 import { ToastrService } from 'ngx-toastr';
-import { Athlete, Modality, Sport } from "../model/athletes.model";
-import { ModalitiesService } from "../services/sports/modalities.service";
+import { Athlete, Modality, Sport } from '../model/athletes.model';
+import { ModalitiesService } from '../services/sports/modalities.service';
+import { SportsService } from '../services/sports/sports.service';
 
 @Component({
   selector: 'app-athletes',
@@ -23,20 +24,26 @@ export class AthletesComponent implements OnInit {
   public selectedModalityId: number = this.allRecords;
   public selectedSportId: number = this.allRecords;
 
+  public sportsList: Sport[];
+  public maxAthletesByPage = 6;
+
   constructor(
     private athletesService: AthletesService,
     private toastrService: ToastrService,
-    private modalitiesService: ModalitiesService
+    private modalitiesService: ModalitiesService,
+    private sportsService: SportsService
   ) {}
 
   ngOnInit() {
     const firstPage = 1;
-    const maxAthletesByPage = 6;
     this.athletesService.getAthletesByPagination(firstPage).subscribe(data => {
       this.athletes = data.results;
       this.data = data;
-      this.numberOfPages = Math.ceil(data.count / maxAthletesByPage);
+      this.numberOfPages = Math.ceil(data.count / this.maxAthletesByPage);
       this.pagination = Array(this.numberOfPages).fill(0);
+    });
+    this.sportsService.getSports().subscribe(sports => {
+      this.sportsList = sports;
     });
   }
 
@@ -77,40 +84,72 @@ export class AthletesComponent implements OnInit {
     }
   }
 
-  public showAthleteParticipations(athlete: Athlete) : void {
-    this.athletesService.getAthleteWithDetails(athlete.id)
-    .subscribe(data => {
+  public showAthleteParticipations(athlete: Athlete): void {
+    this.athletesService.getAthleteWithDetails(athlete.id).subscribe(data => {
       this.selectedAthlete = data;
       this.showAthleteDetail = true;
     });
   }
 
-  public closeAthleteParticipations() : void {
+  public closeAthleteParticipations(): void {
     this.selectedAthlete = new Athlete();
     this.showAthleteDetail = false;
   }
 
-  // TODO, llamar a este método cuando se hace un cambio en el filtro de deportes
-  public onChangeSport() : void {
+
+  public onChangeSport(): void {
     this.selectedModalityId = this.allRecords;
-
-    if (this.selectedSportId === this.allRecords) {
+    if (this.selectedSportId == this.allRecords) {
       this.modalities = [];
-
-      // TODO, aquí se debería llamar al servicio de busqueda de atletas SIN filtro de deporte
+      const firstPage = 1;
+      this.athletesService
+        .getAthletesByPagination(firstPage)
+        .subscribe(data => {
+          this.athletes = data.results;
+          this.data = data;
+        });
     } else {
-      this.modalitiesService.getModalitiesBySport(this.selectedSportId).subscribe(data => {
-        this.modalities = data;
-
-        // TODO, aquí se debería llamar a servicio de busqueda de atletas usando SOLO el valor de 'selectedSportId'
-      });
+      this.modalitiesService
+        .getModalitiesBySport(this.selectedSportId)
+        .subscribe(data => {
+          this.modalities = data;
+          this.getAthletesBySportId(this.selectedSportId);
+          this.data = data;
+        });
     }
   }
 
-  // TODO, llamar al servicio de busqueda de atletas por el deporte seleccionado y la modalidad seleccionada usando
-  //  los valores de 'selectedSportId' y 'selectedModalityId'. Si el valor de 'selectedModalityId' es "-1" no hay que
-  //  enviar el filtro de modalidad
-  public onChangeModality() : void {
-    console.log(this.selectedModalityId);
+  getAthletesBySportId(sportId) {
+    this.athletesService
+      .getFilteredSports(this.selectedSportId)
+      .subscribe(filteredAthletes => {
+        this.athletes = filteredAthletes.results;
+        this.numberOfPages = Math.ceil(
+          filteredAthletes.count / this.maxAthletesByPage
+        );
+        this.pagination = Array(this.numberOfPages).fill(0);
+        this.data = filteredAthletes;
+      });
+  }
+
+  public onChangeModality(): void {
+    if (this.selectedModalityId === this.allRecords) {
+      this.getAthletesBySportId(this.selectedSportId);
+    } else {
+      this.athletesService
+        .getFilteredSportsAndModalities(
+          this.selectedSportId,
+          this.selectedModalityId,
+          1
+        )
+        .subscribe(athletes => {
+          this.athletes = athletes.results;
+          this.numberOfPages = Math.ceil(
+            athletes.count / this.maxAthletesByPage
+          );
+          this.pagination = Array(this.numberOfPages).fill(0);
+          this.data = athletes;
+        });
+    }
   }
 }
