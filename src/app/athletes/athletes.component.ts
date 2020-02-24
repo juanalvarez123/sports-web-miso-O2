@@ -14,18 +14,19 @@ export class AthletesComponent implements OnInit {
   public athletes: Athlete[] = [];
   public sports: Sport[] = [];
   public modalities: Modality[] = [];
+  public sportsList: Sport[] = [];
   public numberOfPages: any;
   public pagination: any;
   public data: any;
 
   public allRecords: number = -1;
+  public firstPage: number = 1;
+  public maxAthletesByPage: number = 6;
+
   public showAthleteDetail: boolean = false;
   public selectedAthlete: Athlete = new Athlete();
   public selectedModalityId: number = this.allRecords;
   public selectedSportId: number = this.allRecords;
-
-  public sportsList: Sport[];
-  public maxAthletesByPage = 6;
 
   constructor(
     private athletesService: AthletesService,
@@ -35,23 +36,30 @@ export class AthletesComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    const firstPage = 1;
-    this.athletesService.getAthletesByPagination(firstPage).subscribe(data => {
-      this.athletes = data.results;
-      this.data = data;
-      this.numberOfPages = Math.ceil(data.count / this.maxAthletesByPage);
-      this.pagination = Array(this.numberOfPages).fill(0);
+    this.athletesService.getAthletesByPagination(this.firstPage).subscribe(data => {
+      this.processAthletesResults(data);
     });
+
     this.sportsService.getSports().subscribe(sports => {
       this.sportsList = sports;
     });
   }
 
   change(page) {
-    this.athletesService.getAthletesByPagination(page).subscribe(data => {
-      this.athletes = data.results;
-      this.data = data;
-    });
+    if (this.selectedSportId == this.allRecords && this.selectedModalityId == this.allRecords) {
+      this.athletesService.getAthletesByPagination(page).subscribe(data => {
+        this.processAthletesResults(data);
+      });
+    } else if (this.selectedSportId != this.allRecords && this.selectedModalityId == this.allRecords) {
+      this.athletesService.getAthletesFilteredBySport(this.selectedSportId, page).subscribe(data => {
+        this.processAthletesResults(data);
+      });
+    } else if (this.selectedSportId != this.allRecords && this.selectedModalityId != this.allRecords) {
+      this.athletesService.getAthletesFilteredBySportAndModality(this.selectedSportId, this.selectedModalityId, page)
+      .subscribe(data => {
+        this.processAthletesResults(data);
+      });
+    }
   }
 
   next() {
@@ -59,8 +67,7 @@ export class AthletesComponent implements OnInit {
       this.athletesService
         .changePreviousNext(this.data.next)
         .subscribe(data => {
-          this.athletes = data.results;
-          this.data = data;
+          this.processAthletesResults(data);
         });
     } else {
       this.toastrService.error('No existe una siguiente página', '', {
@@ -74,8 +81,7 @@ export class AthletesComponent implements OnInit {
       this.athletesService
         .changePreviousNext(this.data.previous)
         .subscribe(data => {
-          this.athletes = data.results;
-          this.data = data;
+          this.processAthletesResults(data);
         });
     } else {
       this.toastrService.error('No existe una página previa', '', {
@@ -96,17 +102,14 @@ export class AthletesComponent implements OnInit {
     this.showAthleteDetail = false;
   }
 
-
   public onChangeSport(): void {
     this.selectedModalityId = this.allRecords;
     if (this.selectedSportId == this.allRecords) {
       this.modalities = [];
-      const firstPage = 1;
       this.athletesService
-        .getAthletesByPagination(firstPage)
+        .getAthletesByPagination(this.firstPage)
         .subscribe(data => {
-          this.athletes = data.results;
-          this.data = data;
+          this.processAthletesResults(data);
         });
     } else {
       this.modalitiesService
@@ -114,21 +117,14 @@ export class AthletesComponent implements OnInit {
         .subscribe(data => {
           this.modalities = data;
           this.getAthletesBySportId(this.selectedSportId);
-          this.data = data;
         });
     }
   }
 
   private getAthletesBySportId(sportId: number): void {
-    this.athletesService
-      .getFilteredSports(sportId)
-      .subscribe(filteredAthletes => {
-        this.athletes = filteredAthletes.results;
-        this.numberOfPages = Math.ceil(
-          filteredAthletes.count / this.maxAthletesByPage
-        );
-        this.pagination = Array(this.numberOfPages).fill(0);
-        this.data = filteredAthletes;
+    this.athletesService.getAthletesFilteredBySport(sportId, this.firstPage)
+      .subscribe(data => {
+        this.processAthletesResults(data);
       });
   }
 
@@ -136,20 +132,21 @@ export class AthletesComponent implements OnInit {
     if (this.selectedModalityId == this.allRecords) {
       this.getAthletesBySportId(this.selectedSportId);
     } else {
-      this.athletesService
-        .getFilteredSportsAndModalities(
+      this.athletesService.getAthletesFilteredBySportAndModality(
           this.selectedSportId,
           this.selectedModalityId,
-          1
+          this.firstPage
         )
-        .subscribe(athletes => {
-          this.athletes = athletes.results;
-          this.numberOfPages = Math.ceil(
-            athletes.count / this.maxAthletesByPage
-          );
-          this.pagination = Array(this.numberOfPages).fill(0);
-          this.data = athletes;
+        .subscribe(data => {
+          this.processAthletesResults(data);
         });
     }
+  }
+
+  private processAthletesResults(data: any): void {
+    this.athletes = data.results;
+    this.data = data;
+    this.numberOfPages = Math.ceil(data.count / this.maxAthletesByPage);
+    this.pagination = Array(this.numberOfPages).fill(0);
   }
 }
